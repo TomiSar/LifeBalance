@@ -1,9 +1,7 @@
 package balanceoflife;
 
-import java.util.Scanner;
 import javafx.application.Application;
 import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -45,6 +43,8 @@ public class BalanceOfLife extends Application {
         TextField weightInput = new TextField();
 
         Button bmiButton = new Button("Calculate BMI");
+        Label calculatedBMInormal = new Label("\nCalculated body mass index Current BMI formula => weight(kg)/height(m)^2");
+        TextField bmiResultNormal = new TextField();
         Label calculatedBMI = new Label("\nCalculated body mass index Nick Trefethen BMI formula => 1.3*weight(kg)/height(m)^2.5");
         TextField bmiResult = new TextField();
 
@@ -56,7 +56,7 @@ public class BalanceOfLife extends Application {
         layout.setPadding(new Insets(20, 20, 20, 30));
 
         layout.getChildren().addAll(presentationLbl, nameLbl, nameInput, heightLbl, heightInput,
-                weightLbl, weightInput, bmiButton, calculatedBMI, bmiResult, resultLbl);
+                weightLbl, weightInput, bmiButton, calculatedBMInormal, bmiResultNormal, calculatedBMI, bmiResult, resultLbl);
 
         bmiButton.setOnAction((event) -> {
             //Convert height and weigth to double and calculate the Body mass index from formula
@@ -68,6 +68,7 @@ public class BalanceOfLife extends Application {
             double nickThrefenBmiIndex = 1.3 * weigth / (Math.pow(heigth * 0.01, 2.5));
 
             //Convert to String 
+            bmiResultNormal.setText(Double.toString(normalBmiIndex));
             bmiResult.setText(Double.toString(nickThrefenBmiIndex));
 
             StringBuilder sb = new StringBuilder();
@@ -102,15 +103,15 @@ public class BalanceOfLife extends Application {
     //Print results from the result of your BMI calculation Nick Trefethen formula
     public void printBMIResults(double bmiIndex, StringBuilder sb) {
         if (bmiIndex >= 0 && bmiIndex <= 14.9) {
-            sb.append("\n").append("\n").append("Nick Trefethen painoindeksin laskukaavan mukaan olet sairaalloisen alipainoinen.");
+            sb.append("\n").append("Nick Trefethen painoindeksin laskukaavan mukaan olet sairaalloisen alipainoinen.");
         } else if (bmiIndex >= 15 && bmiIndex <= 17.9) {
-            sb.append("\n").append("\n").append("Nick Trefethen painoindeksin laskukaavan mukaan olet merkittävän alipainoinen.");
+            sb.append("\n").append("Nick Trefethen painoindeksin laskukaavan mukaan olet merkittävän alipainoinen.");
         } else if (bmiIndex >= 18 && bmiIndex < 18.5) {
-            sb.append("\n").append("\n").append("Nick Trefethen painoindeksin laskukaavan mukaan olet lievästi alipainoinen.");
+            sb.append("\n").append("Nick Trefethen painoindeksin laskukaavan mukaan olet lievästi alipainoinen.");
         } else if (bmiIndex >= 18.5 && bmiIndex < 25) {
-            sb.append("\n").append("\n").append("Nick Trefethen painoindeksin laskukaavan mukaan olet normaalipainoinen.");
+            sb.append("\n").append("Nick Trefethen painoindeksin laskukaavan mukaan olet normaalipainoinen.");
         } else if (bmiIndex < 30) {
-            sb.append("\n").append("\n").append("Nick Trefethen painoindeksin laskukaavan mukaan sinulla on lievää ylipainoa.");
+            sb.append("\n").append("Nick Trefethen painoindeksin laskukaavan mukaan sinulla on lievää ylipainoa.");
         } else if (bmiIndex < 35) {
             sb.append("\n").append("Nick Trefethen painoindeksin laskukaavan mukaan sinulla on merkittävää ylipainoa.");
         } else if (bmiIndex < 40) {
