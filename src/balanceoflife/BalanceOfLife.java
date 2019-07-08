@@ -58,6 +58,7 @@ public class BalanceOfLife extends Application {
         layout.getChildren().addAll(presentationLbl, nameLbl, nameInput, heightLbl, heightInput,
                 weightLbl, weightInput, bmiButton, calculatedBMInormal, bmiResultNormal, calculatedBMI, bmiResult, resultLbl);
 
+        //Exception handling for negative values  
         bmiButton.setOnAction((event) -> {
             //Convert height and weigth to double and calculate the Body mass index from formula
             //Normal BMI formula = weight(kg)/height(m)^2
@@ -97,27 +98,28 @@ public class BalanceOfLife extends Application {
     Lievä alipaino	18 – 18,9
     Normaali paino	19 – 24,9
     Lievä ylipaino	25,0 – 29,9
-    Merkittävä ylipaino	30,0 – 34,9
+     9 
+    ylipaino	30,0 – 34,9
     Vaikea ylipaino	35,0 – 39,9
     Sairaalloinen ylipaino	40,0 tai enemmän*/
     //Print results from the result of your BMI calculation Nick Trefethen formula
     public void printBMIResults(double bmiIndex, StringBuilder sb) {
         if (bmiIndex >= 0 && bmiIndex <= 14.9) {
-            sb.append("\n").append("Nick Trefethen painoindeksin laskukaavan mukaan olet sairaalloisen alipainoinen.");
+            sb.append("\n").append("According Nick Trefethen BMI equation you are sickly underweight.");
         } else if (bmiIndex >= 15 && bmiIndex <= 17.9) {
-            sb.append("\n").append("Nick Trefethen painoindeksin laskukaavan mukaan olet merkittävän alipainoinen.");
-        } else if (bmiIndex >= 18 && bmiIndex < 18.5) {
-            sb.append("\n").append("Nick Trefethen painoindeksin laskukaavan mukaan olet lievästi alipainoinen.");
-        } else if (bmiIndex >= 18.5 && bmiIndex < 25) {
-            sb.append("\n").append("Nick Trefethen painoindeksin laskukaavan mukaan olet normaalipainoinen.");
-        } else if (bmiIndex < 30) {
-            sb.append("\n").append("Nick Trefethen painoindeksin laskukaavan mukaan sinulla on lievää ylipainoa.");
-        } else if (bmiIndex < 35) {
-            sb.append("\n").append("Nick Trefethen painoindeksin laskukaavan mukaan sinulla on merkittävää ylipainoa.");
-        } else if (bmiIndex < 40) {
-            sb.append("\n").append("Nick Trefethen painoindeksin laskukaavan mukaan sinulla on vaikeaa ylipainoa.");
-        } else if (bmiIndex > 40) {
-            sb.append("\n").append("Nick Trefethen painoindeksin laskukaavan mukaan sinulla on sairaalloista ylipainoa.");
+            sb.append("\n").append("According Nick Trefethen BMI equation you are significantly underweight.");
+        } else if (bmiIndex >= 18 && bmiIndex <= 18.9) {
+            sb.append("\n").append("According Nick Trefethen BMI equation you are slighty underweight.");
+        } else if (bmiIndex >= 19 && bmiIndex <= 24.9) {
+            sb.append("\n").append("According Nick Trefethen BMI equation you are normalweight.");
+        } else if (bmiIndex <= 30) {
+            sb.append("\n").append("According Nick Trefethen BMI equation you are slighty overweight.");
+        } else if (bmiIndex <= 34.9) {
+            sb.append("\n").append("According Nick Trefethen BMI equation you are significantly overweight.");
+        } else if (bmiIndex <= 39.9) {
+            sb.append("\n").append("According Nick Trefethen BMI equation you are seriously overweight.");
+        } else if (bmiIndex >= 40) {
+            sb.append("\n").append("According Nick Trefethen BMI equation you are sickly overweight.");
         }
     }
 }
