@@ -36,10 +36,6 @@ public class PersonalData {
         sb.append("\n").append(nimi).append(" pituus ").append(pituus).append("cm ja paino ").append(paino).append("kg\n");
         sb.append("Nick Trefethen laskukaavan mukaan laskettu painoindeksi on ").append(painoindeksi());
 
-        /*25–30: ylipaino eli lievä lihavuus
-        30–35: merkittävä lihavuus
-        35–40: vaikea lihavuus
-        Yli 40: sairaalloinen lihavuus.*/
         if (painoindeksi() > 18.5 && painoindeksi() < 25) {
             sb.append("\n").append("\n").append("Olet normaalipainoinen.");
         } else if (painoindeksi() <= 30) {

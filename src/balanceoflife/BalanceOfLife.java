@@ -11,18 +11,10 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 
-//Current formula: BMI = weight(kg)/height(m)^2
+//BMI formulas 
 /*Nick Trefethen new formula
           http://people.maths.ox.ac.uk/trefethen/bmi.html
           http://people.maths.ox.ac.uk/trefethen/bmi_calc.html*/
-
- /*//        Scanner lukija = new Scanner(System.in);
-//        System.out.print("Nimi: ");
-//        String nimi = lukija.nextLine();
-//        System.out.print("Pituus: ");
-//        int pituus = Integer.parseInt(lukija.nextLine());
-//        System.out.print("Paino: ");
-//        int paino = Integer.parseInt(lukija.nextLine());*/
 public class BalanceOfLife extends Application {
 
     @Override
@@ -58,8 +50,8 @@ public class BalanceOfLife extends Application {
         layout.getChildren().addAll(presentationLbl, nameLbl, nameInput, heightLbl, heightInput,
                 weightLbl, weightInput, bmiButton, calculatedBMInormal, bmiResultNormal, calculatedBMI, bmiResult, resultLbl);
 
-        //Exception handling for negative values  
         bmiButton.setOnAction((event) -> {
+            //Exception handling for negative values
             //Convert height and weigth to double and calculate the Body mass index from formula
             //Normal BMI formula = weight(kg)/height(m)^2
             //Nick Trefethen BMI formula = 1.3*weight(kg)/height(m)^2.5
@@ -68,12 +60,19 @@ public class BalanceOfLife extends Application {
             double normalBmiIndex = weigth / (Math.pow(heigth * 0.01, 2));
             double nickThrefenBmiIndex = 1.3 * weigth / (Math.pow(heigth * 0.01, 2.5));
 
-            //Convert to String 
-            bmiResultNormal.setText(Double.toString(normalBmiIndex));
-            bmiResult.setText(Double.toString(nickThrefenBmiIndex));
+            if (normalBmiIndex <= 0 || nickThrefenBmiIndex <= 0) {
+                bmiResultNormal.setText("Normal body mass index is lower or equal to 0.0");
+                bmiResult.setText("Nick Trefethen body mass index is lower or equal to 0.0");
+            } else {
+                bmiResultNormal.setText(Double.toString(normalBmiIndex));
+                bmiResult.setText(Double.toString(nickThrefenBmiIndex));
+            }
 
+            //Convert to String
+//            bmiResultNormal.setText(Double.toString(normalBmiIndex));
+//            bmiResult.setText(Double.toString(nickThrefenBmiIndex));
             StringBuilder sb = new StringBuilder();
-            sb.append("\nHello ").append(nameInput.getText()).append(" your height is ").append(heightInput.getText()).append("cm and your weight is ").append(weightInput.getText()).append("kg\n");
+            sb.append("\nHello ").append(nameInput.getText()).append(" your height is ").append(heightInput.getText()).append(" cm and your weight is ").append(weightInput.getText()).append(" kg\n");
             sb.append("The body mass index calculated according to the traditional formula is ").append(normalBmiIndex).append(".\n");
             sb.append("The body mass index calculated according to the Nick Trefethen formula is ").append(nickThrefenBmiIndex).append(".\n");;
 
@@ -91,20 +90,22 @@ public class BalanceOfLife extends Application {
     public static void main(String[] args) {
         launch(BalanceOfLife.class);
     }
-
-    //Painoindeksin mukaiset määritelmät
-    /*Sairaalloinen alipaino	0 – 14,9
-    Merkittävä alipaino	15 – 17,9
-    Lievä alipaino	18 – 18,9
-    Normaali paino	19 – 24,9
-    Lievä ylipaino	25,0 – 29,9
-     9 
-    ylipaino	30,0 – 34,9
-    Vaikea ylipaino	35,0 – 39,9
-    Sairaalloinen ylipaino	40,0 tai enemmän*/
+    
     //Print results from the result of your BMI calculation Nick Trefethen formula
+    //Descriptions for Body mass indexes 
+    /*sickly underweight 0 – 14,9
+    signifigant overweight	15 – 17,9
+    slightly alipaino	18 – 18,9
+    normal weight	19 – 24,9
+    slightly weight	25,0 – 29,9
+    significantly overweight	30,0 – 34,9
+    seriously overweight	35,0 – 39,9
+    sickly overweight	40,0 or greater*/
     public void printBMIResults(double bmiIndex, StringBuilder sb) {
-        if (bmiIndex >= 0 && bmiIndex <= 14.9) {
+        if (bmiIndex <= 0) {
+            sb.append("\n").append("According Nick Trefethen BMI equation your BMI is less or equal to 0.0").append("\n")
+                    .append("Check your input parameters. Height should be more than 0.0 and weight sould be more than 0.0");
+        } else if (bmiIndex > 0 && bmiIndex <= 14.9) {
             sb.append("\n").append("According Nick Trefethen BMI equation you are sickly underweight.");
         } else if (bmiIndex >= 15 && bmiIndex <= 17.9) {
             sb.append("\n").append("According Nick Trefethen BMI equation you are significantly underweight.");
