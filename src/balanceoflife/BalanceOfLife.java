@@ -39,11 +39,11 @@ public class BalanceOfLife extends Application {
 
         //Calculation button fro BMI index, labels and textfields for outputs 
         Button bmiButton = new Button("Calculate BMI");
+        Button clearButton = new Button("Clear");
         TextField bmiResultNormal = new TextField();
         TextField bmiResult = new TextField();
         Label calculatedBMInormal = new Label("\nCalculated body mass index Current BMI formula => weight(kg)/height(m)^2");
         Label calculatedBMI = new Label("\nCalculated body mass index Nick Trefethen BMI formula => 1.3*weight(kg)/height(m)^2.5");
-
         Label resultLbl = new Label();
 
         BorderPane componentGroup = new BorderPane();
@@ -52,7 +52,7 @@ public class BalanceOfLife extends Application {
         layout.setPadding(new Insets(20, 20, 20, 30));
 
         layout.getChildren().addAll(presentationLbl, nameLbl, nameInput, heightLbl, heightInput,
-                weightLbl, weightInput, bmiButton, calculatedBMInormal, bmiResultNormal, calculatedBMI, bmiResult, resultLbl);
+                weightLbl, weightInput, bmiButton, clearButton, calculatedBMInormal, bmiResultNormal, calculatedBMI, bmiResult, resultLbl);
 
         bmiButton.setOnAction((event) -> {
             //Convert height and weigth to double and calculate the Body mass index from formula
@@ -71,7 +71,7 @@ public class BalanceOfLife extends Application {
                 bmiResultNormal.setText(Double.toString(normalBmiIndex));
                 bmiResult.setText(Double.toString(nickThrefenBmiIndex));
             }
-            
+
             //StringBuilder to get the infromation in one string
             StringBuilder sb = new StringBuilder();
             sb.append("\nHello ").append(nameInput.getText()).append(" your height is ").append(heightInput.getText()).append(" cm and your weight is ").append(weightInput.getText()).append(" kg\n");
@@ -81,6 +81,16 @@ public class BalanceOfLife extends Application {
             printBMIResults(nickThrefenBmiIndex, sb);
             resultLbl.setText(sb.toString());
 
+        });
+
+        //Clear all text from TextFields, labels and calculation label 
+        clearButton.setOnAction((event) -> {
+            nameInput.setText("");
+            heightInput.setText("");
+            weightInput.setText("");
+            bmiResultNormal.setText("");
+            bmiResult.setText("");
+            resultLbl.setText("");
         });
 
         stage.setTitle("Balance of life");
