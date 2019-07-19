@@ -4,6 +4,7 @@ import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
@@ -58,13 +59,25 @@ public class BalanceOfLife extends Application {
             //Convert height and weigth to double and calculate the Body mass index from formula
             //Normal BMI formula = weight(kg)/height(m)^2
             //Nick Trefethen BMI formula = 1.3*weight(kg)/height(m)^2.5
+            Alert message = new Alert(Alert.AlertType.INFORMATION);
             double heigth = Double.parseDouble(heightInput.getText());
             double weigth = Double.parseDouble(weightInput.getText());
-            double normalBmiIndex = weigth / (Math.pow(heigth * 0.01, 2));
-            double nickThrefenBmiIndex = 1.3 * weigth / (Math.pow(heigth * 0.01, 2.5));
+            double normalBmiIndex = 0.0;
+            double nickThrefenBmiIndex = 0.0;
+            
+            if (heigth > 0 && weigth > 0) {
+                normalBmiIndex = weigth / (Math.pow(heigth * 0.01, 2));
+                nickThrefenBmiIndex = 1.3 * weigth / (Math.pow(heigth * 0.01, 2.5));
+            } else {
+                message.setTitle("Information DialogBox");
+                message.setContentText("Height is " + heigth + "cm and weight is " + weigth + "kg.\n"
+                        + "Heigth and weigth should be greater than zero.\n"
+                        + "Give valid heigth and weight.");
+                message.show();
+            }
 
             //Convert BMI double values to String for TextFields 
-            if (normalBmiIndex <= 0 || nickThrefenBmiIndex <= 0) {
+            if (normalBmiIndex < 0 || nickThrefenBmiIndex < 0) {
                 bmiResultNormal.setText("Normal body mass index is lower or equal to 0.0");
                 bmiResult.setText("Nick Trefethen body mass index is lower or equal to 0.0");
             } else {
