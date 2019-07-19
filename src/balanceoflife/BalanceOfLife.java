@@ -32,8 +32,8 @@ public class BalanceOfLife extends Application {
 
         //Labels ans TextFields
         Label nameLbl = new Label("Name");
-        Label heightLbl = new Label("Length ");
-        Label weightLbl = new Label("Weight ");
+        Label heightLbl = new Label("Lenght");
+        Label weightLbl = new Label("Weight");
         TextField nameInput = new TextField();
         TextField heightInput = new TextField();
         TextField weightInput = new TextField();
@@ -60,40 +60,44 @@ public class BalanceOfLife extends Application {
             //Normal BMI formula = weight(kg)/height(m)^2
             //Nick Trefethen BMI formula = 1.3*weight(kg)/height(m)^2.5
             Alert message = new Alert(Alert.AlertType.INFORMATION);
-            double heigth = Double.parseDouble(heightInput.getText());
-            double weigth = Double.parseDouble(weightInput.getText());
-            double normalBmiIndex = 0.0;
-            double nickThrefenBmiIndex = 0.0;
-            
-            if (heigth > 0 && weigth > 0) {
-                normalBmiIndex = weigth / (Math.pow(heigth * 0.01, 2));
-                nickThrefenBmiIndex = 1.3 * weigth / (Math.pow(heigth * 0.01, 2.5));
+            double height = Double.parseDouble(heightInput.getText());
+            double weight = Double.parseDouble(weightInput.getText());
+            double currentFormulaBmi = 0.0;
+            double newFormulaBmi = 0.0;
+
+            //Set height and weight to personal data to Calculate BMI values
+            PersonalData personalData = new PersonalData(height, weight);
+
+            if (height > 0 && weight > 0) {
+                currentFormulaBmi = personalData.calculateCurrentFormulaBMI();
+                newFormulaBmi = personalData.calculateNewFormulaBMI();
             } else {
                 message.setTitle("Information DialogBox");
-                message.setContentText("Height is " + heigth + "cm and weight is " + weigth + "kg.\n"
-                        + "Heigth and weigth should be greater than zero.\n"
-                        + "Give valid heigth and weight.");
+                message.setContentText("Height is " + height + "cm and weight is " + weight + "kg.\n"
+                        + "Height and weight should be greater than zero.\n"
+                        + "Give valid height and weight.");
                 message.show();
             }
 
             //Convert BMI double values to String for TextFields 
-            if (normalBmiIndex < 0 || nickThrefenBmiIndex < 0) {
+            if (currentFormulaBmi < 0 || newFormulaBmi < 0) {
                 bmiResultNormal.setText("Normal body mass index is lower or equal to 0.0");
                 bmiResult.setText("Nick Trefethen body mass index is lower or equal to 0.0");
             } else {
-                bmiResultNormal.setText(Double.toString(normalBmiIndex));
-                bmiResult.setText(Double.toString(nickThrefenBmiIndex));
+                bmiResultNormal.setText(Double.toString(currentFormulaBmi));
+                bmiResult.setText(Double.toString(newFormulaBmi));
             }
 
             //StringBuilder to get the infromation in one string
             StringBuilder sb = new StringBuilder();
-            sb.append("\nHello ").append(nameInput.getText()).append("! Your height is ").append(heightInput.getText()).append(" cm and your weight is ").append(weightInput.getText()).append(" kg\n");
-            sb.append("The body mass index calculated according to the traditional formula is ").append(normalBmiIndex).append(".\n");
-            sb.append("The body mass index calculated according to the Nick Trefethen formula is ").append(nickThrefenBmiIndex).append(".\n");;
+            sb.append("\nHello ").append(nameInput.getText()).append("! Your height is ").append(heightInput.getText()).append("cm and your weight is ").append(weightInput.getText()).append("kg\n");
+            sb.append("The body mass index calculated according to the traditional formula is ").append(currentFormulaBmi).append(".\n");
+            sb.append("The body mass index calculated according to the Nick Trefethen formula is ").append(newFormulaBmi).append(".\n");;
 
-            printBMIResults(nickThrefenBmiIndex, sb);
-            resultLbl.setText(sb.toString());
-
+            if (newFormulaBmi != 0) {
+                personalData.printBMIResults(newFormulaBmi, sb);
+                resultLbl.setText(sb.toString());
+            }
         });
 
         //Clear all text from TextFields, labels and calculation label 
@@ -114,38 +118,5 @@ public class BalanceOfLife extends Application {
 
     public static void main(String[] args) {
         launch(BalanceOfLife.class);
-    }
-
-    //Print results from the result of your BMI calculation Nick Trefethen formula
-    //Descriptions for Body mass indexes
-    /*sickly underweight 0 – 14,9
-    signifigant overweight	15 – 17,9
-    slightly owerweight	18 – 18,9
-    normal weight	19 – 24,9
-    slightly weight	25,0 – 29,9
-    significantly overweight	30,0 – 34,9
-    seriously overweight	35,0 – 39,9
-    sickly overweight	40,0 or greater*/
-    public void printBMIResults(double bmiIndex, StringBuilder sb) {
-        if (bmiIndex <= 0) {
-            sb.append("\n").append("According Nick Trefethen BMI formula your BMI is less or equal to 0.0").append("\n")
-                    .append("Check your input parameters. Height should be more than 0.0 and weight should be more than 0.0");
-        } else if (bmiIndex > 0 && bmiIndex <= 14.9) {
-            sb.append("\n").append("According Nick Trefethen BMI formula you are sickly underweight.");
-        } else if (bmiIndex >= 15 && bmiIndex <= 17.9) {
-            sb.append("\n").append("According Nick Trefethen BMI formula you are significantly underweight.");
-        } else if (bmiIndex >= 18 && bmiIndex <= 18.9) {
-            sb.append("\n").append("According Nick Trefethen BMI formula you are slighty underweight.");
-        } else if (bmiIndex >= 19 && bmiIndex <= 24.9) {
-            sb.append("\n").append("According Nick Trefethen BMI formula you are normalweight.");
-        } else if (bmiIndex <= 30) {
-            sb.append("\n").append("According Nick Trefethen BMI formula you are slighty overweight.");
-        } else if (bmiIndex <= 34.9) {
-            sb.append("\n").append("According Nick Trefethen BMI formula you are significantly overweight.");
-        } else if (bmiIndex <= 39.9) {
-            sb.append("\n").append("According Nick Trefethen BMI formula you are seriously overweight.");
-        } else if (bmiIndex >= 40) {
-            sb.append("\n").append("According Nick Trefethen BMI formula you are sickly overweight.");
-        }
     }
 }

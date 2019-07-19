@@ -2,22 +2,20 @@ package balanceoflife;
 
 public class PersonalData {
 
-    private String nimi;
-    private int paino;
-    private int pituus;
+    private double height;
+    private double weight;
 
-    public PersonalData(String nimi, int pituus, int paino) {
-        this.nimi = nimi;
-        this.paino = paino;
-        this.pituus = pituus;
+    public PersonalData(double height, double weight) {
+        this.height = height;
+        this.weight = weight;
     }
 
-    public int getPaino() {
-        return paino;
+    public double getHeight() {
+        return height;
     }
 
-    public int getPituus() {
-        return pituus;
+    public double getWeight() {
+        return weight;
     }
 
     //Nick Trefethen new formula
@@ -25,29 +23,44 @@ public class PersonalData {
     //http://people.maths.ox.ac.uk/trefethen/bmi_calc.html
     //Current formula: BMI = weight(kg)/height(m)^2 = 703*weight(lb)/height(in)^2.
     //New formula: BMI = 1.3*weight(kg)/height(m)^2.5 = 5734*weight(lb)/height(in)^2.5
-    public double painoindeksi() {
-        return 1.3 * paino / (Math.pow(pituus * 0.01, 2.5));
+    public double calculateCurrentFormulaBMI() {
+        return weight / (Math.pow(height * 0.01, 2));
     }
 
-    @Override
-    public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append("\nHei ").append(nimi).append(" ja tervetuloa käyttämään Elämän balanssi sovellusta!\n");
-        sb.append("\n").append(nimi).append(" pituus ").append(pituus).append("cm ja paino ").append(paino).append("kg\n");
-        sb.append("Nick Trefethen laskukaavan mukaan laskettu painoindeksi on ").append(painoindeksi());
+    public double calculateNewFormulaBMI() {
+        return 1.3 * weight / (Math.pow(height * 0.01, 2.5));
+    }
 
-        if (painoindeksi() > 18.5 && painoindeksi() < 25) {
-            sb.append("\n").append("\n").append("Olet normaalipainoinen.");
-        } else if (painoindeksi() <= 30) {
-            sb.append("\n").append("\n").append("Sinulla on ylipainoa tai lievää lihavuutta.");
-        } else if (painoindeksi() <= 35) {
-            sb.append("\n").append("Sinulla on merkittävää lihavuutta.");
-        } else if (painoindeksi() <= 40) {
-            sb.append("\n").append("Sinulla on vaikeaa lihavuutta.");
-        } else if (painoindeksi() > 40) {
-            sb.append("\n").append("Sinulla on sairaalloista lihavuutta.");
+    //Print results from the result of your BMI calculation Nick Trefethen formula
+    //Descriptions for Body mass indexes
+    /*sickly underweight 0 – 14,9
+    signifigant overweight	15 – 17,9
+    slightly owerweight	18 – 18,9
+    normal weight	19 – 24,9
+    slightly weight	25,0 – 29,9
+    significantly overweight	30,0 – 34,9
+    seriously overweight	35,0 – 39,9
+    sickly overweight	40,0 or greater*/
+    public void printBMIResults(double bmiIndex, StringBuilder sb) {
+        if (bmiIndex <= 0) {
+            sb.append("\n").append("According Nick Trefethen BMI formula your BMI is less or equal to 0.0").append("\n")
+                    .append("Check your input parameters. Height should be more than 0.0 and weight should be more than 0.0");
+        } else if (bmiIndex > 0 && bmiIndex <= 14.9) {
+            sb.append("\n").append("According Nick Trefethen BMI formula you are sickly underweight.");
+        } else if (bmiIndex >= 15 && bmiIndex <= 17.9) {
+            sb.append("\n").append("According Nick Trefethen BMI formula you are significantly underweight.");
+        } else if (bmiIndex >= 18 && bmiIndex <= 18.9) {
+            sb.append("\n").append("According Nick Trefethen BMI formula you are slighty underweight.");
+        } else if (bmiIndex >= 19 && bmiIndex <= 24.9) {
+            sb.append("\n").append("According Nick Trefethen BMI formula you are normalweight.");
+        } else if (bmiIndex <= 30) {
+            sb.append("\n").append("According Nick Trefethen BMI formula you are slighty overweight.");
+        } else if (bmiIndex <= 34.9) {
+            sb.append("\n").append("According Nick Trefethen BMI formula you are significantly overweight.");
+        } else if (bmiIndex <= 39.9) {
+            sb.append("\n").append("According Nick Trefethen BMI formula you are seriously overweight.");
+        } else if (bmiIndex >= 40) {
+            sb.append("\n").append("According Nick Trefethen BMI formula you are sickly overweight.");
         }
-        return sb.toString();
     }
-
 }
