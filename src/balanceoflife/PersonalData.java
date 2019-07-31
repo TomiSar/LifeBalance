@@ -1,5 +1,7 @@
 package balanceoflife;
 
+import javafx.scene.control.Alert;
+
 public class PersonalData {
 
     private double height;
@@ -8,14 +10,6 @@ public class PersonalData {
     public PersonalData(double height, double weight) {
         this.height = height;
         this.weight = weight;
-    }
-
-    public double getHeight() {
-        return height;
-    }
-
-    public double getWeight() {
-        return weight;
     }
 
     //Nick Trefethen new formula
@@ -29,6 +23,19 @@ public class PersonalData {
 
     public double calculateNewFormulaBMI() {
         return 1.3 * weight / (Math.pow(height * 0.01, 2.5));
+    }
+
+    //Print message Information DialogBox if height or weight is lower than 0.0
+    public void printMessageInformation(Alert message, double height, double weight) {
+        message.setTitle("Information DialogBox");
+        message.setContentText("Give valid height and weight!!\n\n"
+                + "Height and weight should be greater than 0.0.\n"
+                + "Normal body mass index is lower or equal to 0.0.\n\n"
+                + "Height is " + height + "cm and weight is " + weight + "kg.\n"
+                + "Ńormal body mass index is lower or equal to 0.0.\n"
+                + "Nick Trefethen body mass index is lower or equal to 0.0.\n");
+
+        message.show();
     }
 
     //Print results from the result of your BMI calculation Nick Trefethen formula
