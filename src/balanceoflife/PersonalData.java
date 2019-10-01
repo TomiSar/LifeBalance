@@ -11,12 +11,10 @@ public class PersonalData {
         this.height = height;
         this.weight = weight;
     }
-
-    //Nick Trefethen new formula
+    
+    //Current formula vs Nick Trefethen formula
     //http://people.maths.ox.ac.uk/trefethen/bmi.html
-    //http://people.maths.ox.ac.uk/trefethen/bmi_calc.html
-    //Current formula: BMI = weight(kg)/height(m)^2 = 703*weight(lb)/height(in)^2.
-    //New formula: BMI = 1.3*weight(kg)/height(m)^2.5 = 5734*weight(lb)/height(in)^2.5
+    //Current : weight(kg)/height(m)^2 and Nick Trefethen : 1.3*weight(kg)/height(m)^2.5
     public double calculateCurrentFormulaBMI() {
         return weight / (Math.pow(height * 0.01, 2));
     }
